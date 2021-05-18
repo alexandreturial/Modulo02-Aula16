@@ -8,68 +8,75 @@ class FormUser extends StatelessWidget {
     String lastName;
 
     return Scaffold(
-      appBar: AppBar(title: Text("Form user"),),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical:25.0, horizontal: 50),
-        child: Column(
-          children: [
-            Text(
-              "Informe seu nome e sobrenome",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    validator: (text){
-                      if(text == null || text.isEmpty){
-                        return 'campo obrigatorio';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Nome"
-                    ),
-                    onChanged: (text) => name = text,
-                  ),
-                  TextFormField(
-                    validator: (text){
-                      if(text == null || text.isEmpty){
-                        return 'campo obrigatorio';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Sobrenome"
-                    ),
-                    onChanged: (text) => lastName = text,
-                  ),
-                  ElevatedButton(
-                    onPressed: (){
+        backgroundColor: Colors.blue,
+        body: Align(
+          child: Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.5,
+            padding: EdgeInsets.all(25),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 5,
+                      color: Colors.black.withOpacity(0.3),
+                      offset: Offset(0, 2),
+                      spreadRadius: 2)
+                ]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextFormField(
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'campo obrigatorio';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Nome",
+                            ),
+                            onChanged: (text) => name = text,
+                          ),
+                          TextFormField(
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'campo obrigatorio';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(hintText: "Sobrenome"),
+                            onChanged: (text) => lastName = text,
+                          ),
+                        ],
+                      )),
+                ),
+                ElevatedButton(
+                    onPressed: () {
                       final isValid = _formKey.currentState.validate();
-                      if(isValid){
+                      if (isValid) {
                         showDialog(
-                          context: context, 
-                          builder: (context){
-                            return AlertDialog(
-                              title: Text('${name +' '+ lastName}'),
-                            );
-                          }
-                        );
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Olá ${name + ' ' + lastName}'),
+                              );
+                            });
                       }
-                    }, 
-                    child: Text("Validar")
-                  )
-                ],
-              )
+                    },
+                    child: Text("Validar"))
+              ],
             ),
-          ],
-        ),
-      )
-    );
+          ),
+        ));
   }
 }
