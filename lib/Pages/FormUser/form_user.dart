@@ -12,9 +12,12 @@ class FormUser extends StatelessWidget {
         body: Align(
           child: Container(
             alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 0.5,
             height: MediaQuery.of(context).size.height * 0.5,
             padding: EdgeInsets.all(25),
+            constraints: BoxConstraints(
+              minWidth: 300
+            ),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
