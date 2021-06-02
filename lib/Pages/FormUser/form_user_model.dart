@@ -6,7 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FormModel{
   String? name;
   String? lastName;
-  final InternalStorageAdpter internalStorage = SecureStorageAdapter();
+  final InternalStorageAdpter internalStorage;
+
+  FormModel({InternalStorageAdpter? intenralStorageAdapter}) 
+  : internalStorage = intenralStorageAdapter ?? SecureStorageAdapter();
 
   setName(String val){
     name = val;
