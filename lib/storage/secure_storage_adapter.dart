@@ -10,6 +10,8 @@ class SecureStorageAdapter extends InternalStorageAdpter{
     print('dados seguros');
   }
 
+  
+
   Future<String> getFullName() async{
     String? name = await secureStorage.read(key: 'name');
     String? lastname = await secureStorage.read(key: 'lastname');
@@ -18,6 +20,39 @@ class SecureStorageAdapter extends InternalStorageAdpter{
       return name + ' ' + lastname;
     else{
       return 'Usuário não existe';
+    }
+  }
+  @override
+  void saveNameForm(String name) async{
+    await secureStorage.write(key: 'form_name', value: name);
+    print('name form savo!');
+  }
+
+  @override
+  void saveLastNameForm(String lastName) async{
+    await secureStorage.write(key: 'form_lastname', value: lastName);
+    print('lastName form savo!');
+  }
+
+  @override
+  Future<String> getName() async{
+    String? name = await secureStorage.read(key: 'form_name');
+
+    if((name != null))
+      return name;
+    else{
+      return 'sem nome';
+    }
+  }
+
+  @override
+  Future<String> getLasName() async{
+    String? lastname = await secureStorage.read(key: 'form_lastname');
+
+    if((lastname != null))
+      return lastname;
+    else{
+      return 'sem nome';
     }
   }
 }

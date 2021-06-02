@@ -11,7 +11,11 @@ class FormController{
     model.setLastName(name);
   }
 
-  String get name => model.fullname();
+  String get completName => model.fullname();
+
+  Future<String> get name => model.name();
+
+  Future<String> get lastName => model.lastName();
   
   Future<String> get fullName => model.getFullName();
 
