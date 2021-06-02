@@ -7,7 +7,6 @@ class FormUser extends StatelessWidget {
   Widget build(BuildContext context) {
     FormController controller = FormController();
 
-
     return Scaffold(
         backgroundColor: Colors.blue,
         body: Align(
@@ -16,9 +15,7 @@ class FormUser extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.5,
             height: MediaQuery.of(context).size.height * 0.5,
             padding: EdgeInsets.all(25),
-            constraints: BoxConstraints(
-              minWidth: 300
-            ),
+            constraints: BoxConstraints(minWidth: 300),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
@@ -64,9 +61,11 @@ class FormUser extends StatelessWidget {
                         ],
                       )),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                     
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
                         final isValid = _formKey.currentState!.validate();
                         if (isValid) {
                           showDialog(
@@ -77,27 +76,49 @@ class FormUser extends StatelessWidget {
                                     children: [
                                       Text('ola ${controller.name}'),
                                       ElevatedButton(
-                                        onPressed: (){
-                                          controller.saveUser();
-                                          
-                                        }, 
-                                        child: Text('salvar'))
+                                          onPressed: () {
+                                            controller.saveUser();
+                                          },
+                                          child: Text('salvar'))
                                     ],
                                   ),
                                 );
                               });
                         }
-                      
-                      
-                    },
-                    child: Text("Validar"),
+                      },
+                      child: Text("Validar"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        final isValid = _formKey.currentState!.validate();
+                        if (isValid) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Column(
+                                    children: [
+                                      Text('ola ${controller.name}'),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            controller.saveUser();
+                                          },
+                                          child: Text('salvar'))
+                                    ],
+                                  ),
+                                );
+                              });
+                        }
+                      },
+                      child: Text("Deletar"),
+                    ),
+                  ],
                 ),
                 FutureBuilder<String>(
-                  future: controller.fullName,
-                  builder: (context, snapshot){
-                    return Text(snapshot.data ?? '');
-                  }
-                )
+                    future: controller.fullName,
+                    builder: (context, snapshot) {
+                      return Text(snapshot.data ?? '');
+                    })
               ],
             ),
           ),

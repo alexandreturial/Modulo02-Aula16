@@ -1,3 +1,4 @@
+import 'package:aula18/sql/sql_adapter.dart';
 import 'package:aula18/storage/secure_storage_adapter.dart';
 import 'package:aula18/storage/shared_preferences_adapter.dart';
 import 'package:aula18/utils/internal_storage.dart';
@@ -6,7 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FormModel{
   String? name;
   String? lastName;
-  final InternalStorageAdpter internalStorage = SecureStorageAdapter();
+  final InternalStorageAdpter internalStorage;
+
+  FormModel({InternalStorageAdpter? intenralStorageAdapter}) 
+  : internalStorage = intenralStorageAdapter ?? SQLAdapter();
 
   setName(String val){
     name = val;
