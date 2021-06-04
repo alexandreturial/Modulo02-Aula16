@@ -30,16 +30,35 @@ class SQLAdapter extends InternalStorageAdpter{
   @override
   Future<String> getFullName() async{
     final Database db = await database;
+    
     var response = await db.query(
       'Users', 
       columns: ['rowid, name, surname'],
-      where: 'rowid = ?',
-      whereArgs: [3]
+      orderBy: 'rowid DESC',
+      limit: 1
     );
 
     if(response.isNotEmpty){
       final user = User.fromMap(response.first);
       return user.rowid.toString() + ' ' + user.name + ' ' + user.surname;
+    }else{
+      return 'Usuario não encontrado';
+    }
+  }
+
+  Future<String> getId() async{
+    final Database db = await database;
+    
+    var response = await db.query(
+      'Users', 
+      columns: ['rowid'],
+      orderBy: 'rowid DESC',
+      limit: 1
+    );
+
+    if(response.isNotEmpty){
+      final user = User.fromMap(response.first);
+      return user.rowid.toString();
     }else{
       return 'Usuario não encontrado';
     }
@@ -58,13 +77,38 @@ class SQLAdapter extends InternalStorageAdpter{
     print('usuario salvo');
   }
 
-  void deletUser(int userId) async{
+  void deleteUser() async{
     // TODO: implement saveUser
     final Database db = await database;
-    db.delete(
-      'Users', 
-      where: 'rowid = ?',
-      whereArgs: [userId]
+    db.rawDelete(
+      'DELETE FROM Users WHERE rowid = (SELECT MAX(rowid) FROM Users)'
     );
+    
+    // delete(
+    //   'Users', 
+    //   where: 'SELECT MAX(id) FROM Users',
+    // );
+  }
+
+  @override
+  Future<String> getLasName() {
+    // TODO: implement getLasName
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> getName() {
+    // TODO: implement getName
+    throw UnimplementedError();
+  }
+
+  @override
+  void saveLastNameForm(String lastname) {
+      // TODO: implement saveLastNameForm
+    }
+  
+    @override
+    void saveNameForm(String name) {
+    // TODO: implement saveNameForm
   }
 }

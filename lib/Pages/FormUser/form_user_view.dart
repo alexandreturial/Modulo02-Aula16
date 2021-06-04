@@ -1,8 +1,14 @@
 import 'package:aula18/Pages/FormUser/form_user_controller.dart';
 import 'package:flutter/material.dart';
 
-class FormUser extends StatelessWidget {
+class FormUser extends StatefulWidget {
+  @override
+  _FormUserState createState() => _FormUserState();
+}
+
+class _FormUserState extends State<FormUser> {
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     FormController controller = FormController();
@@ -74,10 +80,11 @@ class FormUser extends StatelessWidget {
                                 return AlertDialog(
                                   title: Column(
                                     children: [
-                                      Text('ola ${controller.name}'),
+                                      Text('Salvar: ${controller.name}'),
                                       ElevatedButton(
                                           onPressed: () {
                                             controller.saveUser();
+                                            Navigator.pop(context, true);
                                           },
                                           child: Text('salvar'))
                                     ],
@@ -90,25 +97,9 @@ class FormUser extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        final isValid = _formKey.currentState!.validate();
-                        if (isValid) {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Column(
-                                    children: [
-                                      Text('ola ${controller.name}'),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            controller.saveUser();
-                                          },
-                                          child: Text('salvar'))
-                                    ],
-                                  ),
-                                );
-                              });
-                        }
+                        setState(() {
+                          controller.deleteUser();
+                        });
                       },
                       child: Text("Deletar"),
                     ),

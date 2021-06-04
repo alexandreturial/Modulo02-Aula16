@@ -18,4 +18,8 @@ class FormController{
   void saveUser(){
     model.saveuser();
   }
+
+  void deleteUser(){
+    model.deleteUser();
+  }
 }

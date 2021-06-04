@@ -23,4 +23,50 @@ class SharedPreferencesAdapter extends InternalStorageAdpter{
       return 'Usuário não existe';
     }
   }
+
+  @override
+  void saveNameForm(String name) async{
+    final internalPref = await _pref;
+    internalPref.setString('form_name', name);
+    print('name form savo!');
+  }
+
+  @override
+  void saveLastNameForm(String lastName) async{
+    final internalPref = await _pref;
+    internalPref.setString('form_lastname', lastName);
+    print('lastName form savo!');
+  }
+
+  @override
+  Future<String> getName() async{
+    final internalPref = await _pref;
+
+    String? name = internalPref.getString('name');
+
+
+    if((name != null))
+      return name;
+    else{
+      return '';
+    }
+  }
+
+  @override
+  Future<String> getLasName() async{
+     final internalPref = await _pref;
+
+    String? lastname = internalPref.getString('lastname');
+
+    if((lastname != null))
+      return lastname;
+    else{
+      return '';
+    }
+  }
+
+  @override
+  void deleteUser() {
+    // TODO: implement deletUser
+  }
 }
