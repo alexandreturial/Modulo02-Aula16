@@ -28,7 +28,7 @@ class SQLAdapter extends InternalStorageAdpter{
   }
 
   @override
-  Future<String> getFullName() async{
+  Future<User> getUser() async{
     final Database db = await database;
     
     var response = await db.query(
@@ -40,27 +40,10 @@ class SQLAdapter extends InternalStorageAdpter{
 
     if(response.isNotEmpty){
       final user = User.fromMap(response.first);
-      return user.rowid.toString() + ' ' + user.name + ' ' + user.surname;
+      return user;
     }else{
-      return 'Usuario não encontrado';
-    }
-  }
-
-  Future<String> getId() async{
-    final Database db = await database;
-    
-    var response = await db.query(
-      'Users', 
-      columns: ['rowid'],
-      orderBy: 'rowid DESC',
-      limit: 1
-    );
-
-    if(response.isNotEmpty){
-      final user = User.fromMap(response.first);
-      return user.rowid.toString();
-    }else{
-      return 'Usuario não encontrado';
+     User user = User('none', 'none');
+      return user;
     }
   }
 
@@ -72,7 +55,6 @@ class SQLAdapter extends InternalStorageAdpter{
       'name': name,
       'surname': lastName
     };
-
     await db.insert('Users', user);
     print('usuario salvo');
   }
@@ -88,27 +70,5 @@ class SQLAdapter extends InternalStorageAdpter{
     //   'Users', 
     //   where: 'SELECT MAX(id) FROM Users',
     // );
-  }
-
-  @override
-  Future<String> getLasName() {
-    // TODO: implement getLasName
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<String> getName() {
-    // TODO: implement getName
-    throw UnimplementedError();
-  }
-
-  @override
-  void saveLastNameForm(String lastname) {
-      // TODO: implement saveLastNameForm
-    }
-  
-    @override
-    void saveNameForm(String name) {
-    // TODO: implement saveNameForm
   }
 }

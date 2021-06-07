@@ -1,3 +1,4 @@
+import 'package:aula18/Pages/FormUser/user.dart';
 import 'package:aula18/utils/internal_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,7 +45,6 @@ class SharedPreferencesAdapter extends InternalStorageAdpter{
 
     String? name = internalPref.getString('name');
 
-
     if((name != null))
       return name;
     else{
@@ -66,7 +66,13 @@ class SharedPreferencesAdapter extends InternalStorageAdpter{
   }
 
   @override
+  Future<User> getUser() {
+    // TODO: implement getUser
+    throw UnimplementedError();
+  }
+
+  @override
   void deleteUser() {
-    // TODO: implement deletUser
+    // TODO: implement deleteUser
   }
 }

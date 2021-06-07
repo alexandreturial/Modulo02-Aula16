@@ -1,4 +1,5 @@
 import 'package:aula18/Pages/FormUser/form_user_controller.dart';
+import 'package:aula18/Pages/FormUser/user.dart';
 import 'package:flutter/material.dart';
 
 class FormUser extends StatefulWidget {
@@ -8,10 +9,14 @@ class FormUser extends StatefulWidget {
 
 class _FormUserState extends State<FormUser> {
   final _formKey = GlobalKey<FormState>();
+  String? name;
+  String? surname;
 
   @override
   Widget build(BuildContext context) {
-    FormController controller = FormController();
+    FormViewModel  controller = FormViewModel ();
+   
+
 
     return Scaffold(
         backgroundColor: Colors.blue,
@@ -52,7 +57,7 @@ class _FormUserState extends State<FormUser> {
                             decoration: InputDecoration(
                               hintText: "Nome",
                             ),
-                            onChanged: (text) => controller.setName(text),
+                            onChanged: (text) => name = text,//controller.setName(text),
                           ),
                           TextFormField(
                             validator: (text) {
@@ -62,7 +67,7 @@ class _FormUserState extends State<FormUser> {
                               return null;
                             },
                             decoration: InputDecoration(hintText: "Sobrenome"),
-                            onChanged: (text) => controller.setLast(text),
+                            onChanged: (text) => surname = text, //controller.setLast(text),
                           ),
                         ],
                       )),
@@ -80,10 +85,14 @@ class _FormUserState extends State<FormUser> {
                                 return AlertDialog(
                                   title: Column(
                                     children: [
-                                      Text('Salvar: ${controller.name}'),
+                                      Text('Salvar: $name $surname'),
                                       ElevatedButton(
                                           onPressed: () {
-                                            controller.saveUser();
+                                            controller.saveUser(name!, surname!);
+                                             setState(() {
+                                                controller.getUser();
+                                              });
+                                            
                                             Navigator.pop(context, true);
                                           },
                                           child: Text('salvar'))
@@ -99,17 +108,28 @@ class _FormUserState extends State<FormUser> {
                       onPressed: () {
                         setState(() {
                           controller.deleteUser();
+                          controller.getUser();
                         });
                       },
                       child: Text("Deletar"),
                     ),
                   ],
                 ),
-                FutureBuilder<String>(
-                    future: controller.fullName,
+                Container(
+                  child: StreamBuilder<User>(
+                    stream: controller.user.stream,
                     builder: (context, snapshot) {
-                      return Text(snapshot.data ?? '');
-                    })
+                      print(snapshot.connectionState != ConnectionState.active);
+                        if(snapshot.connectionState != ConnectionState.active){
+                          return CircularProgressIndicator();
+                        }
+                      if(snapshot.hasData){
+                        return Text('${snapshot.data!.name} ${snapshot.data!.surname}');
+                      }
+                      return Text('');
+                      
+                    }),
+                )
               ],
             ),
           ),

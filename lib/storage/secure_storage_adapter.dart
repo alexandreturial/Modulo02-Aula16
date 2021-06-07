@@ -1,3 +1,4 @@
+import 'package:aula18/Pages/FormUser/user.dart';
 import 'package:aula18/utils/internal_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -59,5 +60,11 @@ class SecureStorageAdapter extends InternalStorageAdpter{
   @override
   void deleteUser() {
     // TODO: implement deletUser
+  }
+
+  @override
+  Future<User> getUser() {
+    // TODO: implement getUser
+    throw UnimplementedError();
   }
 }

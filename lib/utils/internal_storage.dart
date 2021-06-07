@@ -1,15 +1,9 @@
+import 'package:aula18/Pages/FormUser/user.dart';
+
 abstract class InternalStorageAdpter{
   void saveUser(String name, String lastName);
   
-  void saveNameForm(String name);
-
-  void saveLastNameForm(String lastname);
+  Future<User> getUser();
 
   void deleteUser();
-
-  Future<String> getFullName();
-
-  Future<String> getName();
-
-  Future<String> getLasName();
 }

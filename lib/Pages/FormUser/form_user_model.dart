@@ -1,3 +1,4 @@
+import 'package:aula18/Pages/FormUser/user.dart';
 import 'package:aula18/sql/sql_adapter.dart';
 import 'package:aula18/storage/secure_storage_adapter.dart';
 import 'package:aula18/storage/shared_preferences_adapter.dart';
@@ -29,14 +30,12 @@ class FormModel{
     }
   }
 
-  Future<String> getFullName(){
-    return internalStorage.getFullName();
+  Future<User> currentUser(){
+    return internalStorage.getUser();
   }
 
-  void saveuser(){
-    if((name == null) || (lastName == null)) return;
-    internalStorage.saveUser(name!, lastName!);
-  
+  void saveuser(String name, String suerName){
+    internalStorage.saveUser(name, suerName);
   }
 
   void deleteUser(){
