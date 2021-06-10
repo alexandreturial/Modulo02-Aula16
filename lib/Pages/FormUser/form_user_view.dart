@@ -16,7 +16,7 @@ class _FormUserState extends State<FormUser> {
   Widget build(BuildContext context) {
     FormViewModel  controller = FormViewModel ();
    
-    controller.getUser();
+    //controller.getUser();
 
     return Scaffold(
         backgroundColor: Colors.blue,
@@ -124,24 +124,10 @@ class _FormUserState extends State<FormUser> {
                       if(snapshot.hasData && snapshot.data!.name != ''){
                         return Text('${snapshot.data!.rowid} - ${snapshot.data!.name} ${snapshot.data!.surname}');
                       }
-                      return Text('');
+                      return Text('Usuários não cadastrados');
                       
                     }),
                 ),
-                // Container(
-                //   child: FutureBuilder<User>(
-                //     future: controller.getUser(),
-                //     builder: (context, snapshot) {
-                //         if(snapshot.connectionState != ConnectionState.done){
-                //           return CircularProgressIndicator();
-                //         }
-                //       if(snapshot.hasData){
-                //         return Text('${snapshot.data!.name} ${snapshot.data!.surname}');
-                //       }
-                //       return Text('');
-                      
-                //     }),
-                // )
               ],
             ),
           ),
