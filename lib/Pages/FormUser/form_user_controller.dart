@@ -13,17 +13,25 @@ class FormViewModel {
 
   StreamController<User> user = StreamController();
 
-  void getUser(){
-    model.currentUser().then((value){
+  getUser(){
+     model.currentUser();
+    model.user.then((value){
       user.add(value);
-      print(user);
-      
     });
   }
 
+  // User getUser(){
+  //   return model.currentUser();
+  // }
+
   void saveUser(String name, String suerName){
     model.saveuser(name,  suerName);
-   
+    model.currentUser();
+    // model.user.then((value){
+    //   print('ID: ${value.rowid}, name: ${value.name} r');
+    //   user.add(value);
+    // });
+    //model.currentUser();
   }
 
   void deleteUser(){

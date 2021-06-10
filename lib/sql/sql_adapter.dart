@@ -42,7 +42,7 @@ class SQLAdapter extends InternalStorageAdpter{
       final user = User.fromMap(response.first);
       return user;
     }else{
-     User user = User('none', 'none');
+      User user = User(0,'', '');
       return user;
     }
   }

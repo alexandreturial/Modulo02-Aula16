@@ -8,18 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FormModel{
   String? name;
   String? lastName;
+  Future<User> _user = Future.value(User(0,'', ''));
   final InternalStorageAdpter internalStorage;
 
   FormModel({InternalStorageAdpter? intenralStorageAdapter}) 
   : internalStorage = intenralStorageAdapter ?? SQLAdapter();
 
-  setName(String val){
-    name = val;
-  }
-
-  setLastName(String val){
-    lastName = val;
-  }
 
   String fullname(){
     if((name != null) && (lastName != null)){
@@ -30,8 +24,10 @@ class FormModel{
     }
   }
 
-  Future<User> currentUser(){
-    return internalStorage.getUser();
+  Future<User> get user => _user;
+
+ void currentUser(){
+    _user = internalStorage.getUser();
   }
 
   void saveuser(String name, String suerName){

@@ -16,7 +16,7 @@ class _FormUserState extends State<FormUser> {
   Widget build(BuildContext context) {
     FormViewModel  controller = FormViewModel ();
    
-
+    controller.getUser();
 
     return Scaffold(
         backgroundColor: Colors.blue,
@@ -88,11 +88,7 @@ class _FormUserState extends State<FormUser> {
                                       Text('Salvar: $name $surname'),
                                       ElevatedButton(
                                           onPressed: () {
-                                            controller.saveUser(name!, surname!);
-                                             setState(() {
-                                                controller.getUser();
-                                              });
-                                            
+                                             controller.saveUser(name!, surname!);
                                             Navigator.pop(context, true);
                                           },
                                           child: Text('salvar'))
@@ -100,6 +96,9 @@ class _FormUserState extends State<FormUser> {
                                   ),
                                 );
                               });
+                          setState(() {
+                            controller.getUser();
+                          });
                         }
                       },
                       child: Text("Validar"),
@@ -108,7 +107,7 @@ class _FormUserState extends State<FormUser> {
                       onPressed: () {
                         setState(() {
                           controller.deleteUser();
-                          controller.getUser();
+                          //controller.getUser();
                         });
                       },
                       child: Text("Deletar"),
@@ -119,17 +118,30 @@ class _FormUserState extends State<FormUser> {
                   child: StreamBuilder<User>(
                     stream: controller.user.stream,
                     builder: (context, snapshot) {
-                      print(snapshot.connectionState != ConnectionState.active);
-                        if(snapshot.connectionState != ConnectionState.active){
-                          return CircularProgressIndicator();
-                        }
-                      if(snapshot.hasData){
-                        return Text('${snapshot.data!.name} ${snapshot.data!.surname}');
+                      if(snapshot.connectionState != ConnectionState.active){
+                        return CircularProgressIndicator();
+                      }
+                      if(snapshot.hasData && snapshot.data!.name != ''){
+                        return Text('${snapshot.data!.rowid} - ${snapshot.data!.name} ${snapshot.data!.surname}');
                       }
                       return Text('');
                       
                     }),
-                )
+                ),
+                // Container(
+                //   child: FutureBuilder<User>(
+                //     future: controller.getUser(),
+                //     builder: (context, snapshot) {
+                //         if(snapshot.connectionState != ConnectionState.done){
+                //           return CircularProgressIndicator();
+                //         }
+                //       if(snapshot.hasData){
+                //         return Text('${snapshot.data!.name} ${snapshot.data!.surname}');
+                //       }
+                //       return Text('');
+                      
+                //     }),
+                // )
               ],
             ),
           ),

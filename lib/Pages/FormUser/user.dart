@@ -1,9 +1,9 @@
 class User{
-  int? rowid;
+  int rowid;
   String name;
   String surname;
 
-  User(this.name, this.surname);
+  User(this.rowid, this.name, this.surname);
 
   User.fromMap(Map<String, dynamic> map) :
     rowid = map['rowid'],
